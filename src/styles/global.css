@@ -1,0 +1,65 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #F8F9FA;
+}
+
+/* Common utility classes */
+.flex {
+  display: flex;
+}
+
+.grid {
+  display: grid;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Colors */
+:root {
+  --primary-color: #8AB661;
+  --primary-light: #F3F9EE;
+  --gray-50: #F9FAFB;
+  --gray-400: #9CA3AF;
+  --gray-500: #6B7280;
+  --gray-600: #4B5563;
+  --yellow-bg: #FDFAE7;
+  --red-500: #EF4444;
+}
+
+/* Button styles */
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #7aa154;
+}
+
+.btn-danger {
+  border: 1px solid var(--red-500);
+  color: var(--red-500);
+  background: transparent;
+}
+
+.btn-danger:hover {
+  background-color: #FEF2F2;
+}
