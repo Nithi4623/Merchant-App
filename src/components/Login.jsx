@@ -18,7 +18,7 @@ const Login = () => {
   };
 
   const handleContact = () => {
-    alert("Contact Us button clicked! Add your contact functionality here.");
+   return
   };
 
   return (
@@ -27,7 +27,7 @@ const Login = () => {
         <div className="overlay">
           <div className="modal">
             <img
-              src="logo-placeholder.png" // Replace with your logo image
+             src="logo.png"
               alt="Logo"
               className="logo"
             />
@@ -54,20 +54,11 @@ const Login = () => {
                 Privacy Policy
               </a>.
             </p>
-            <button
-              className="close-btn"
-              onClick={() => setIsModalOpen(false)}
-            >
-              ×
-            </button>
+          
           </div>
         </div>
       )}
-      {!isModalOpen && (
-        <button className="open-btn" onClick={() => setIsModalOpen(true)}>
-          Open Modal
-        </button>
-      )}
+     
     </div>
   );
 };

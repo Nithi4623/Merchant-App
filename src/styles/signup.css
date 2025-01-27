@@ -3,7 +3,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-image: url('background-placeholder.jpg'); Replace with your background image */
+    background-image: url('../images/super.jpg'); 
     background-size: cover;
     background-position: center;
     height: 100vh;

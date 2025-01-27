@@ -32,9 +32,10 @@ const SignUp = () => {
         console.log(res.data.message)
         toast.success(res?.data?.message);
         navigate('/Otp-Submission')
+        localStorage.setItem('userData' , JSON.stringify(Payloads))
       })
       .catch((err) => {
-        toast.error("Failed to send OTP. Please try again.");
+        toast.error(err.response.data.message)
         console.error(err);
       });
   };
@@ -43,7 +44,13 @@ const SignUp = () => {
     <div>
       {isModalOpen && (
         <div className="overlay">
+         
           <div className="modal">
+          <img
+          src="logo.png"
+          alt="Logo"
+          className="logo"
+        />
             <h1>Get started with REWARDIFY</h1>
             <p>Enter your mobile number or Shop ID to get started</p>
             <input

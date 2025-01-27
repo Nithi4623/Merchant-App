@@ -6,7 +6,7 @@ const Modal = ({ onRegister, onLogin, closeModal }) => {
     <div className="modal-overlay">
       <div className="modal-box">
         <div className="modal-icon">
-          <img src="/path/to/your/icon.png" alt="Store Icon" />
+          <img src="images/logo.png" alt="Store Icon"/>
         </div>
         <h2>No stores are linked to this account</h2>
         <p>

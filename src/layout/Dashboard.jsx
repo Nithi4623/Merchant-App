@@ -3,9 +3,11 @@ import { CreditCard, History, Gift, RefreshCw, User } from 'lucide-react';
 import '../styles/Dashboard.css';
 
 function Dashboard() {
+
+   const Data = [1,2,3,4];
   return (
     <div className="dashboard">
-      {/* Quick Actions */}
+   
       <div className="quick-actions">
         <h2 className="section-title">Quick Actions</h2>
         <div className="actions-grid">
@@ -42,7 +44,7 @@ function Dashboard() {
           </div>
           
           <div className="transaction-list">
-            {[1, 2, 3, 4].map((i) => (
+            {Data.map((i) => (
               <div key={i} className="transaction-item">
                 <div className="transaction-user">
                   <div className="user-avatar">
@@ -76,14 +78,14 @@ function Dashboard() {
           </div>
 
           <div className="order-list">
-            {[1, 2].map((i) => (
+            {Data.map((i) => (
               <div key={i} className="order-card">
                 <div className="order-header">
                   <div>
                     <span className="order-id">Order ID: 12345</span>
                     <span className="payment-status">PAID - UPI</span>
                   </div>
-                  <p className="order-date">Date: Apr 09, 2024</p>
+                  <p className="order-date">Date:Apr 09, 2024</p>
                 </div>
                 <div className="order-items">
                   <div className="order-item">
@@ -95,13 +97,7 @@ function Dashboard() {
                     <span>₹50.00</span>
                   </div>
                 </div>
-                <div className="order-footer">
-                  <span className="total">Total: ₹150.00</span>
-                  <div className="order-actions">
-                    <button className="btn btn-danger">Reject Order</button>
-                    <button className="btn btn-primary">Confirm Order</button>
-                  </div>
-                </div>
+                
               </div>
             ))}
           </div>

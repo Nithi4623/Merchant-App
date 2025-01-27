@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../styles/otp.css";
+import ApiClient from "../apiclient/apiConfig";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+
 
 const OTPModal = () => {
+   const navigate = useNavigate()
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [resendTimer, setResendTimer] = useState(55);
-
- 
   const inputRefs = useRef([]);
 
   const handleChange = (value, index) => {
@@ -18,15 +21,50 @@ const OTPModal = () => {
       inputRefs.current[index + 1].focus();
     }
   };
+  const storedData = localStorage.getItem('userData')
+      
+    const userData = JSON.parse(storedData);
+   
 
-  const handleVerify = () => {
-    if (otp.includes("")) {
-      alert("Please enter the complete OTP.");
-      return;
-    }
-    alert(`OTP Verified: ${otp.join("")}`);
+    const handleVerify = () => {
 
-  };
+      const endPoint = 'https://rewardify.dotcod.in//api/v1/store-user/auth/login';
+    
+     
+      const Payload = {
+        otp: Number(otp.join('')), 
+        dialCode: Number(userData.dialCode),
+        contactNo: userData.contactNo,
+        type: 1
+      };
+       const headers  ={
+        "device":`{"device" : "Nexus Phone","app":"web","device_type":2,"OS":"unknown","ip_address":"103.28.246.86","browser":"Chrome"}`,
+        "Content-Type":"application/json"
+       }
+    
+      
+      ApiClient.post(endPoint, Payload,{
+        headers
+      })
+        .then((response) => {
+          toast.success("Token Generated Successfully")
+          const Data  = response.data
+          localStorage.setItem("UserToken" , JSON.stringify(Data))
+          navigate('/SelectDetail')
+
+        })
+        .catch((error) => {
+          console.error('Errorrttr', error.response.data.message);
+          toast.error(error.response.data.message)
+        });
+    
+     
+      // if (otp.length !== 6 || otp.includes("")) {
+      //   alert("Please enter the complete OTP.");
+      //   return;
+      // }
+    }; 
+    
 
   
   useEffect(() => {
@@ -39,7 +77,7 @@ const OTPModal = () => {
   const resendOTP = () => {
     setOtp(["", "", "", ""]);
     setResendTimer(55);
-    alert("OTP resent!");
+    // alert("OTP resent!");
   
   };
 
@@ -47,7 +85,7 @@ const OTPModal = () => {
     <div className="overlay">
       <div className="modal">
         <img
-          src="logo-placeholder.png" 
+          src="logo.png"
           alt="Logo"
           className="logo"
         />

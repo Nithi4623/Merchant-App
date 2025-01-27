@@ -1,49 +1,110 @@
-import React from 'react';
-import { Outlet, NavLink, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Outlet, NavLink, useLocation, useSearchParams } from 'react-router-dom';
 import { Store, CreditCard, Package, User, Settings } from 'lucide-react';
 import '../styles/Layout.css';
+import Dashboard from '../layout/Dashboard';
+import ApiClient from '../apiclient/apiConfig';
+import toast from 'react-hot-toast';
 
 const  Layout = () => {
-  const location = useLocation();
+
+   const [userDetails,setUserDetails]=useState([])
+   const [storeDetail,setStoreDetails]=useState([])
+ 
+
+   useEffect(()=>{
+    ShopDetails()
+    Getstore()
+   },[])
+   const Authtoken = localStorage.getItem('UserToken')
+   const Authheader =JSON.parse(Authtoken) 
+    const token = Authheader?.token
+  
+
+    const ShopDetails = ()=>{
+      const endPoint = 'https://rewardify.dotcod.in/api/v1/store-user/store/user/'
+      const headers  ={
+       "Authorization": `Bearer ${token}`,
+       "device":`{"device" : "Nexus Phone","app":"web","device_type":2,"OS":"unknown","ip_address":"103.28.246.86","browser":"Chrome"}`,
+       // "Content-Type":"application/json"
+      
+      }
+ 
+      ApiClient.get(endPoint ,{headers} ).then((res)=>{
+        setUserDetails([res?.data])
+       console.log(res?.data ,"jhjhgjgjh")
+      }).catch((err)=>{
+       toast.error(err.response.data.message)
+ 
+      })
+ 
+
+
+
+    }
+    
+     
+    
+       
+      const Getstore = ()=>{
+    
+        
+         const endPoint = 'https://rewardify.dotcod.in/api/v1/store-user/store/'
+         const headers  ={
+          "Authorization": `Bearer ${token}`,
+          "device":`{"device" : "Nexus Phone","app":"web","device_type":2,"OS":"unknown","ip_address":"103.28.246.86","browser":"Chrome"}`,
+          // "Content-Type":"application/json"
+         
+         }
+    
+         ApiClient.get(endPoint ,{headers} ).then((res)=>{
+          setStoreDetails([res?.data])
+         
+         }).catch((err)=>{
+          toast.error(err.response.data.message)
+    
+         })
+    
+    
+    
+      }
 
   return (
     <div className="layout">
-      {/* Sidebar */}
+      
       <div className="sidebar">
         <div className="sidebar-content">
           <h1 className="logo">REWARDIFY</h1>
           
           <div className="store-info">
             <img 
-              src="https://images.unsplash.com/photo-1582560475093-ba66accbc424?w=100&h=100&fit=crop" 
+              src={storeDetail[0]?.images[0]}
               alt="Store" 
               className="store-image"
             />
             <div className="store-details">
               <h2>
-                Kannan departmental
-                <svg className="dropdown-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                  <path d="M6 9l6 6 6-6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+                {storeDetail[0]?.name}
+           
               </h2>
-              <p className="store-id">Shop ID: 123456789</p>
+              <p className="store-id">Store ID = {storeDetail[0]?.storeId}</p>
             </div>
           </div>
           
           <nav className="nav-list">
-            <NavLink to="/" end className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+            <NavLink to="" end className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
               <Store size={18} />
               Dashboard
             </NavLink>
-            <NavLink to="/orders" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+            <NavLink to="" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
               <CreditCard size={18} />
               Orders
             </NavLink>
-            <NavLink to="/products" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+            <NavLink to="" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
               <Package size={18} />
               My Products
             </NavLink>
-            <NavLink to="/profile" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
+            <NavLink to="" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>
               <User size={18} />
               Profile
             </NavLink>
@@ -56,7 +117,7 @@ const  Layout = () => {
         <header className="header">
           <div className="header-content">
             <div className="welcome">
-              <h1>Welcome, Rajesh</h1>
+              <h1> Welcome ,{userDetails[0]?.name}</h1>
               <span>👋</span>
             </div>
             <div className="header-actions">
@@ -70,7 +131,8 @@ const  Layout = () => {
           </div>
         </header>
         <main className="main">
-          <Outlet />
+        
+          <Dashboard/>
         </main>
       </div>
     </div>
